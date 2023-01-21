@@ -67,7 +67,7 @@ on damage of a player:
 
 #easyrg
 command /gmgr <text> [<text>] [<player>]:
-    description: 公会管理器
+    description: 公会管理简化器
     permission: guildmgr.mgr
     permission message: &4你没有权限执行该指令！
     trigger:
