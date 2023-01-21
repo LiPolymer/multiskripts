@@ -1,0 +1,82 @@
+on load:
+    send "[&emultiSkript&3s&r][&6Copyright © 2023 Li3Fish. All rights reserved.&r]>&5脚本开始加载!" to console
+    send "[&emultiSkript&3s&r][Github repo]>&6https://github.com/Li3Fish/multiskripts" to console
+    send "[&emultiSkript&3s&rLoad]&f&l┃&7Where Is My &3Ender Egg?&f&l┃&f&l:检查变量完整性..." to console
+    if {counter.wimee} is not set:
+        send "[&emultiSkript&3s&rLoad]§7[§3蛋?§7]初始化计数变量..." to console
+        set {counter.wimee} to 0
+    if {goal.wimee} is not set:
+        send "[&emultiSkript&3s&rLoad]§7[§3蛋?§7]初始化目标变量..." to console
+        set {goal.wimee} to 5
+    if {targetlocationx.wimee} is not set:
+        set {targetlocationx.wimee} to 0
+    if {targetlocationy.wimee} is not set:
+        set {targetlocationy.wimee} to 65
+    if {targetlocationz.wimee} is not set:
+        set {targetlocationz.wimee} to 0
+    send "[&emultiSkript&3s&rLoad]&f&l┃&7Where Is My &3Ender Egg?&f&l┃&f&l:完成!" to console
+    send "[&emultiSkript&3s&rLoad]&f&l┃&7What the F**k is this &3Dragon&f&l┃&f&l:完成!" to console
+    send "[&emultiSkript&3s&rLoad]&f&l┃&7EZ&3/rg&f&l┃&f&l:完成!" to console
+    send "[&emultiSkript&3s&r]>&5脚本加载完成!" to console
+#wimee
+on death of an ender dragon:
+    add 1 to {counter.wimee}
+    broadcast "§7[§3蛋?§7] &a末影龙已被§7[§6%attacker%§7]杀死!§3[&a%{counter.wimee}%§3/§6%{goal.wimee}%§3]"
+    if {counter.wimee} = {goal.wimee}:
+        broadcast "§7[§3蛋?§7] &a目标达成,龙蛋将在60秒后生成!"
+        wait 60 seconds
+        execute console command "/execute in minecraft:the_end run setblock %{targetlocationx.wimee}% %{targetlocationy.wimee}% %{targetlocationz.wimee}% minecraft:dragon_egg replace"
+        broadcast "§7[§3蛋!§7] &a龙蛋已经生成!"
+        set {counter.wimee} to 0
+
+command /wimeeclrc:
+	permission: wimee.admin
+	permission message: &4你没有权限执行该指令！
+	trigger:
+		set {counter.wimee} to 0
+		send "§7[§3蛋?§7]计数器&a清除完成&r!"
+
+command /wimeesetg [<number>]:
+	permission: wimee.admin
+	permission message: &4你没有权限执行该指令！
+	trigger:
+		set {goal.wimee} to arg-1
+		send "§7[§3蛋?§7]击杀目标数设置为&a[%arg-1%]&r!"
+
+command /wimeesetl [<number>] [<number>] [<number>]:
+    permission: wimee.admin
+    permission message: &4你没有权限执行该指令！
+    trigger:
+        set {targetlocationx.wimee} to arg-1
+        set {targetlocationy.wimee} to arg-2
+        set {targetlocationz.wimee} to arg-3
+        send "§7[§3蛋?§7]放置位置设置为&a[%arg-1%,%arg-2%,%arg-3%]&r!"
+
+
+#wtfitd
+on spawn of an ender dragon:
+    broadcast "§7[§3龙!§7]&2末影龙已生成!"
+    send "§7[§3龙!§7]&6加载强化..." to console
+    apply resistance of tier 3 to event-entity for 999 days
+
+on damage of a player:
+    if attacker is an ender dragon:
+        apply weakness of tier 2 to victim for 5 seconds
+        apply levitation of tier 1 to victim for 3 seconds
+        apply instant damage of tier 1 to victim
+
+#easyrg
+command /gmgr <text> [<text>] [<player>]:
+    description: 公会管理器
+    permission: guildmgr.mgr
+    permission message: &4你没有权限执行该指令！
+    trigger:
+        if arg-1 is "add":
+            execute console command "/rg addmember -w %arg-2% __global__ %arg-3's uuid%"
+            send "§7[§3公会管理§7]>&e完成!"
+        if arg-1 is "kick":
+            execute console command "/rg removemember -w %arg-2% __global__ %arg-3's uuid%"
+            send "§7[§3公会管理§7]>&e完成!"
+        if arg-1 is "help":
+            send "§7[§3公会管理§7]>[§e帮助§7]§r/gmgr add <公会名> <玩家名>  (添加玩家到公会)" to player
+            send "§7[§3公会管理§7]>[§e帮助§7]§r/gmgr kick <公会名> <玩家名> (从公会删除玩家)" to player
