@@ -1,5 +1,5 @@
 on load:
-    send "[&emultiSkript&3s&r][&6Copyright © 2023 Li3Fish. All rights reserved.&r]>&5脚本开始加载!" to console
+    send "[&emultiSkript&3s&r][&6Copyright © 2023 Silicon WorkGroup. All rights reserved.&r]>&5脚本开始加载!" to console
     send "[&emultiSkript&3s&r][Github repo]>&6https://github.com/Li3Fish/multiskripts" to console
     send "[&emultiSkript&3s&rLoad]&f&l┃&7Where Is My &3Ender Egg?&f&l┃&f&l:检查变量完整性..." to console
     if {counter.wimee} is not set:
